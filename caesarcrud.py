@@ -118,6 +118,7 @@ class CaesarCRUD:
                     updatelist.append(fieldstr)
 
                 else:
+                    value = value.replace("'","''",1000000)
                     fieldstr = f"{field} = '{value}'"
                     updatelist.append(fieldstr)
             updatestr = ', '.join(updatelist)
@@ -130,7 +131,8 @@ class CaesarCRUD:
             if type(values[0]) != str:
                 updatestr = f"{fieldstoupdate[0]} = {values[0]}"
             else:
-                updatestr = f"{fieldstoupdate[0]} = '{values[0]}'"
+                value = values[0].replace("'","''",1000000)
+                updatestr = f"{fieldstoupdate[0]} = '{value}'"
             result = self.caesarsql.run_command(f"UPDATE {table} SET {updatestr} WHERE {condition};",self.caesarsql.fetch)
             if result == ():
                 return True
